@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { IProduct } from "@/types";
 import { ActionType } from "./types";
+import ProductReducer from "./reducer";
 
 export interface IState {
   products: IProduct[];
@@ -33,6 +34,7 @@ const { reducer, actions } = createSlice({
       state.products = state.products.filter(({ id }) => id !== action.payload);
     },
   },
+  extraReducers: ProductReducer,
 });
 
 export { reducer, actions };
