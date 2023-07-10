@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, SafeAreaView, FlatList } from "react-native";
 
 import { RootState } from "@/store";
 import { useAppDispatch, useAppSelector } from "@/hook";
 import { getProducts } from "@/store/products/actions";
+
+import { Item } from "./Item";
 
 export const Products = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -14,15 +15,15 @@ export const Products = (): JSX.Element => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(products.length);
-  }, [products]);
-
   return (
-    <View style={styles.container}>
-      <Text style={{ color: "#fff" }}>{products.length} Products</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        style={{ width: "100%" }}
+        data={products}
+        renderItem={({ item }) => <Item item={item} />}
+        keyExtractor={(item) => `${item.id}`}
+      />
+    </SafeAreaView>
   );
 };
 

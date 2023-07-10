@@ -3406,6 +3406,14 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
+"expo-navigation-bar@~2.1.1":
+  "integrity" "sha512-UXTfK5Uv65qCFEro9XJY1gxViaqKFB4996OkC3HChGeitGWolCtd7VzVBYKDyfn4EqryDMedrNIqYNWLEFjIZw=="
+  "resolved" "https://registry.npmjs.org/expo-navigation-bar/-/expo-navigation-bar-2.1.1.tgz"
+  "version" "2.1.1"
+  dependencies:
+    "@react-native/normalize-color" "^2.0.0"
+    "debug" "^4.3.2"
+
 "expo-status-bar@~1.4.4":
   "integrity" "sha512-5DV0hIEWgatSC3UgQuAZBoQeaS9CqeWRZ3vzBR9R/+IUD87Adbi4FGhU10nymRqFXOizGsureButGZIXPs7zEA=="
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.4.4.tgz"
