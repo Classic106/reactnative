@@ -1,27 +1,13 @@
-import { useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-
-import { RootState } from "@/store";
-import { useAppDispatch, useAppSelector } from "@/hook";
-import { getProducts } from "@/store/products/actions";
+import { ImageBackground, StyleSheet, View } from "react-native";
+const image = { uri: "https://legacy.reactjs.org/logo-og.png" };
+import { Tabs } from "./Tabs";
 
 export default function Main(): React.ReactElement {
-  const dispatch = useAppDispatch();
-  const { products } = useAppSelector(({ product }: RootState) => product);
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
-
-  useEffect(() => {
-    console.log(products.length);
-  }, [products]);
-
   return (
     <View style={styles.container}>
-      <Text>{products.length} Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+        <Tabs />
+      </ImageBackground>
     </View>
   );
 }
@@ -29,8 +15,10 @@ export default function Main(): React.ReactElement {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: "transparent",
+  },
+  image: {
+    flex: 1,
     justifyContent: "center",
   },
 });
