@@ -1,22 +1,29 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
+import { actions } from "@/store/products/slice";
+import { useAppDispatch } from "@/hook";
 import { IProduct } from "@/types";
 import { globalStyleVariables } from "@/style";
 const { goldColor, whiteColor } = globalStyleVariables;
 
 export const Item = ({ item }: { item: IProduct }) => {
-  const { title, image, price, category } = item;
+  const dispatch = useAppDispatch();
+
+  const { id, title, image, price } = item;
+
+  const openPopup = (id: number) => {
+    dispatch(actions.CHOSED_PRODUCT(id));
+  };
 
   return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-      <Image source={{ uri: image }} style={styles.image} />
-      <View style={styles.description}>
-        <Text style={styles.descriptionText}>category: {category}</Text>
-        <Text style={styles.descriptionText}>price: {price} $</Text>
+    <TouchableOpacity onPress={() => openPopup(id)}>
+      <View style={styles.item}>
+        <Text style={styles.title}>{title}</Text>
+        <Image source={{ uri: image }} style={styles.image} />
+        <Text style={styles.price}>price: {price} $</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -37,15 +44,12 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   title: {
-    zIndex: 1,
-
     fontSize: 25,
     textAlign: "center",
     marginBottom: 15,
     color: whiteColor,
   },
   image: {
-    zIndex: 1,
     flex: 1,
     justifyContent: "center",
     width: "100%",
@@ -53,13 +57,8 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     aspectRatio: 1,
   },
-  description: {
-    zIndex: 1,
+  price: {
     marginTop: 10,
-  },
-  descriptionText: {
-    fontSize: 20,
-    textAlign: "center",
     color: whiteColor,
   },
 });
