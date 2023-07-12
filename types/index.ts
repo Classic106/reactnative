@@ -11,7 +11,7 @@ interface IRate {
 }
 
 interface IProduct {
-  id?: number;
+  id: number;
   title: string;
   price: number;
   description: string;

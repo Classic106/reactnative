@@ -83,9 +83,7 @@ export const AddProduct = (): JSX.Element => {
                 defaultValue={ECategories.Electronics}
                 onSelect={handleChange("category")}
                 defaultButtonText={"Category"}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  return selectedItem;
-                }}
+                buttonTextAfterSelection={(selectedItem) => selectedItem}
                 buttonStyle={{ ...styles.input, ...styles.dropdownBtnStyle }}
                 buttonTextStyle={styles.dropdownBtnTxtStyle}
                 dropdownStyle={styles.dropdownDropdownStyle}
