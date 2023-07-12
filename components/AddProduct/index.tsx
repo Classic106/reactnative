@@ -7,8 +7,9 @@ import {
   StyleSheet,
 } from "react-native";
 import { Formik } from "formik";
+import SelectDropdown from "react-native-select-dropdown";
 
-import { IProduct } from "@/types";
+import { IProduct, ECategories } from "@/types";
 import { productSchema } from "@/validation-schemas";
 
 import { globalStyleVariables } from "@/style";
@@ -23,7 +24,7 @@ export const AddProduct = (): JSX.Element => {
   const values = {
     title: "",
     description: "",
-    category: "",
+    category: ECategories.Electronics,
     image: "",
     price: 0,
   } as IProduct;
@@ -43,7 +44,7 @@ export const AddProduct = (): JSX.Element => {
       validationSchema={productSchema}
     >
       {({ handleChange, handleSubmit, values, errors }) => {
-        const { title, description, category, image, price } = values;
+        const { title, description, image, price } = values;
         const {
           title: errTitle,
           description: errDescription,
@@ -57,13 +58,12 @@ export const AddProduct = (): JSX.Element => {
           !!errCategory &&
           !!errImage &&
           !!errPrice;
-        const { area, input, inputErr, button } = styles;
 
         return (
-          <SafeAreaView style={area}>
+          <SafeAreaView style={styles.area}>
             <View>
               <TextInput
-                style={errTitle ? inputErr : input}
+                style={errTitle ? styles.inputErr : styles.input}
                 placeholderTextColor={whiteColor}
                 placeholder="Title"
                 value={title}
@@ -71,23 +71,29 @@ export const AddProduct = (): JSX.Element => {
                 onChangeText={handleChange("title")}
               />
               <TextInput
-                style={errDescription ? inputErr : input}
+                style={errDescription ? styles.inputErr : styles.input}
                 placeholderTextColor={whiteColor}
                 placeholder="Description"
                 value={description}
                 inputMode="text"
                 onChangeText={handleChange("description")}
               />
-              <TextInput
-                style={errCategory ? inputErr : input}
-                placeholderTextColor={whiteColor}
-                placeholder="Category"
-                value={category}
-                inputMode="text"
-                onChangeText={handleChange("category")}
+              <SelectDropdown
+                data={Object.values(ECategories)}
+                defaultValue={ECategories.Electronics}
+                onSelect={handleChange("category")}
+                defaultButtonText={"Category"}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                buttonStyle={{ ...styles.input, ...styles.dropdownBtnStyle }}
+                buttonTextStyle={styles.dropdownBtnTxtStyle}
+                dropdownStyle={styles.dropdownDropdownStyle}
+                rowStyle={styles.dropdownRowStyle}
+                rowTextStyle={styles.dropdownRowTxtStyle}
               />
               <TextInput
-                style={errImage ? inputErr : input}
+                style={errImage ? styles.inputErr : styles.input}
                 placeholderTextColor={whiteColor}
                 value={image}
                 placeholder="Image Url"
@@ -96,7 +102,7 @@ export const AddProduct = (): JSX.Element => {
                 onChangeText={handleChange("image")}
               />
               <TextInput
-                style={errPrice ? inputErr : input}
+                style={errPrice ? styles.inputErr : styles.input}
                 placeholderTextColor={whiteColor}
                 value={`${price}`}
                 placeholder="Price"
@@ -106,7 +112,7 @@ export const AddProduct = (): JSX.Element => {
               />
             </View>
             <TouchableOpacity
-              style={button}
+              style={styles.button}
               disabled={isDisabled ? false : true}
               onPress={() => handleSubmit()}
             >
@@ -125,6 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   input: {
+    width: "95%",
     height: 40,
     margin: 12,
     borderWidth: 1,
@@ -148,4 +155,25 @@ const styles = StyleSheet.create({
     maxHeight: 60,
     backgroundColor: goldColor,
   },
+
+  dropdownBtnStyle: {
+    backgroundColor: "transparent",
+    padding: 0,
+    borderWidth: 1,
+    borderColor: whiteColor,
+  },
+  dropdownBtnTxtStyle: {
+    color: whiteColor,
+    margin: 0,
+    padding: 0,
+    textAlign: "left",
+    fontSize: 15,
+    backgroundColor: "transparent",
+  },
+  dropdownDropdownStyle: { backgroundColor: "transparent" },
+  dropdownRowStyle: {
+    backgroundColor: whiteColor,
+    borderBottomColor: "#C5C5C5",
+  },
+  dropdownRowTxtStyle: { color: goldColor, textAlign: "center" },
 });
